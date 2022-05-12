@@ -17,19 +17,39 @@ const fetchPostFailed = (payload) => ({
 
 const fetchPostAsync = (username, password) => {
     return function(dispatch, getState, baseUrl){
-        baseUrl = 'https://basic-auth-example.herokuapp.com/users/authenticate'
+        baseUrl = 'https://basic-auth-example.herokuapp.com'
         dispatch(fetchPostStart)
-        axios.post(baseUrl, {
+        axios.post(`${baseUrl}/users/authenticate`, {
             username: username,
             password: password
         })
         .then((response) => {
             console.log(response.data)
-            dispatch(fetchPostSuccess(response.data))
+            dispatch(fetchPostSuccess({username, password}))
         })
         .catch((error) => {
             dispatch(fetchPostFailed(error))
         })
+    }
+}
+
+const fetchUserDetailAsync = () => {
+    return (dispatch, getState, baseUrl) => {
+        const { username, password } = getState()
+        console.log(username, password)
+
+        axios.get(`$baseUrl/users`, {
+            auth: {
+                username,
+                password
+            },
+            headers: {
+
+            }
+        }).then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {})
     }
 }
 

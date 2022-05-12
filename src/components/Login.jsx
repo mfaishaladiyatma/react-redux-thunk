@@ -12,6 +12,8 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(fetchPostAsync(username, password))
+    setUsername('')
+    setPassword('')
   }
 
   return (
